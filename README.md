@@ -10,39 +10,39 @@
 
 <!-- [![npm](https://img.shields.io/npm/v/wyvern-js.svg)](https://www.npmjs.com/package/wyvern-js) [![npm](https://img.shields.io/npm/dt/wyvern-js.svg)](https://www.npmjs.com/package/wyvern-js) -->
 
-A JavaScript library for crypto-native ecommerce: buying, selling, and bidding on any cryptogood. With OpenSea.js, you can easily build your own native marketplace for your non-fungible tokens, or NFTs. These can be ERC-721 or ERC-1155 (semi-fungible) items. You don't have to deploy your own smart contracts or backend orderbooks.
+OpenSea.jsは、様々な暗号資産の売買や入札ができる、クリプトネイティブなeコマース向けのJavaScriptライブラリです。OpenSea.jsを使うことで、バックエンドのオーダーブックやスマートコントラクトを自分でデプロイしなくても、自身が所有するNFT（ERC-721またはERC-1155）を取引するための独自のマーケットプレイスを簡単に構築することができます。
 
 Published on [GitHub](https://github.com/ProjectOpenSea/opensea-js) and [npm](https://www.npmjs.com/package/opensea-js)
 
-- [Synopsis](#synopsis)
-- [Installation](#installation)
-- [Getting Started](#getting-started)
-  - [Fetching Assets](#fetching-assets)
-    - [Checking Balances and Ownerships](#checking-balances-and-ownerships)
-  - [Making Offers](#making-offers)
-    - [Bidding on ENS Short Name Auctions](#bidding-on-ens-short-name-auctions)
-    - [Offer Limits](#offer-limits)
-  - [Making Listings / Selling Items](#making-listings--selling-items)
-  - [Running Crowdsales](#running-crowdsales)
-  - [Fetching Orders](#fetching-orders)
-  - [Buying Items](#buying-items)
-  - [Accepting Offers](#accepting-offers)
-  - [Transferring Items or Coins (Gifting)](#transferring-items-or-coins-gifting)
-- [Advanced](#advanced)
-  - [Scheduling Future Listings](#scheduling-future-listings)
-  - [Purchasing Items for Other Users](#purchasing-items-for-other-users)
-  - [Bulk Transfers](#bulk-transfers)
-  - [Using ERC-20 Tokens Instead of Ether](#using-erc-20-tokens-instead-of-ether)
-  - [Private Auctions](#private-auctions)
-  - [Listening to Events](#listening-to-events)
-- [Learning More](#learning-more)
-  - [Example Code](#example-code)
-- [Migrating to version 1.0](#migrating-to-version-10)
-- [Development Information](#development-information)
-- [Diagnosing Common Issues](#diagnosing-common-issues)
-- [Testing your branch locally](#testing-your-branch-locally)
+- [概要](#概要)
+- [インストール](#インストール)
+- [はじめに](#はじめに)
+  - [アセットをフェッチする](#アセットをフェッチする)
+    - [残高と所有権を確認する](#残高と所有権を確認する)
+  - [オファーを作成する](#オファーを作成する)
+    - [ENSオークションに入札する](#ensオークションに入札する)
+    - [オファーの上限](#オファーの上限)
+  - [アイテムを出品/販売する](#アイテムを出品販売する)
+  - [イギリス式オークションを作成する](#イギリス式オークションを作成する)
+  - [オーダーをフェッチする](#オーダーをフェッチする)
+  - [アイテムを購入する](#アイテムを購入する)
+  - [オファーを承認する](#オファーを承認する)
+  - [アイテムや暗号通貨を送る(ギフティング)](#アイテムや暗号通貨を送るギフティング)
+- [高度な機能](#高度な機能)
+  - [出品を予約する](#出品を予約する)
+  - [代理で商品を購入する](#代理で商品を購入する)
+  - [一括送信](#一括送信)
+  - [イーサの代わりにERC-20トークンを使用する](#イーサの代わりにerc-20トークンを使用する)
+  - [プライベート・オークション](#プライベートオークション)
+  - [イベントを発火させる](#イベントを発火させる)
+- [もっと詳しく](#もっと詳しく)
+  - [サンプルコード](#サンプルコード)
+- [バージョン1.0への移行](#バージョン10への移行)
+- [開発するにあたって](#開発するにあたって)
+- [トラブルシューティング](#トラブルシューティング)
+- [ローカルでブランチをテストする](#ローカルでブランチをテストする)
 
-## Synopsis
+## 概要
 
 This is the JavaScript SDK for [OpenSea](https://opensea.io), the largest marketplace for NFTs.
 
@@ -52,7 +52,7 @@ Get started by [requesting an API key](https://docs.opensea.io/reference) and in
 
 Happy seafaring! ⛵️
 
-## Installation
+## インストール
 
 We recommend switching to Node.js version 16 to make sure common crypto dependencies work. Execute `nvm use`, if you have Node Version Manager.
 
@@ -85,7 +85,7 @@ sudo xcode-select --switch /Library/Developer/CommandLineTools # Enable command 
 sudo npm explore npm -g -- npm install node-gyp@latest # (Optional) update node-gyp
 ```
 
-## Getting Started
+## はじめに
 
 To get started, first request an API key [here](https://docs.opensea.io/reference). Note the terms of use for using API data.
 
@@ -110,7 +110,7 @@ const openseaSDK = new OpenSeaSDK(provider, {
 
 In a browser with web3 or an extension like [MetaMask](https://metamask.io/) or [Dapper](http://www.meetdapper.com/), you can use `window.ethereum` (or `window.web3.currentProvider` for legacy mobile web3 browsers) to access the native provider. In a Node.js script, you can follow [this example](https://github.com/ProjectOpenSea/opensea-creatures/blob/master/scripts/sell.js) to use a custom mnemonic.
 
-### Fetching Assets
+### アセットをフェッチする
 
 Assets are items on OpenSea. They can be non-fungible (conforming to standards like ERC721), semi-fungible (like ERC1155 assets), and even fungible (ERC20).
 
@@ -147,7 +147,7 @@ const asset: OpenSeaAsset = await openseaSDK.api.getAsset({
 
 Note that fungible ERC20 assets have `null` as their token id.
 
-#### Checking Balances and Ownerships
+#### 残高と所有権を確認する
 
 The nice thing about the `Asset` type is that it unifies logic between fungibles, non-fungibles, and semi-fungibles.
 
@@ -177,7 +177,7 @@ const balanceOfWETH = await openseaSDK.getTokenBalance({
 })
 ```
 
-### Making Offers
+### オファーを作成する
 
 Once you have your asset, you can do this to make an offer on it:
 
@@ -201,7 +201,7 @@ const offer = await openseaSDK.createBuyOrder({
 
 When you make an offer on an item owned by an OpenSea user, **that user will automatically get an email notifying them with the offer amount**, if it's above their desired threshold.
 
-#### Bidding on ENS Short Name Auctions
+#### ENSオークションに入札する
 
 The Ethereum Name Service (ENS) is auctioning short (3-6 character) names that can be used for labeling wallet addresses and more. Learn more on the [ENS FAQ](https://opensea.io/ens).
 
@@ -232,11 +232,11 @@ const offer = await openseaSDK.createBuyOrder({
 })
 ```
 
-#### Offer Limits
+#### オファーの上限
 
 Note: The total value of buy orders must not exceed 1000 x wallet balance.
 
-### Making Listings / Selling Items
+### アイテムを出品/販売する
 
 To sell an asset, call `createSellOrder`. You can do a fixed-price listing, where `startAmount` is equal to `endAmount`, or a declining [Dutch auction](https://en.wikipedia.org/wiki/Dutch_auction), where `endAmount` is lower and the price declines until `expirationTime` is hit:
 
@@ -262,7 +262,7 @@ The units for `startAmount` and `endAmount` are Ether, ETH. If you want to speci
 
 See [Listening to Events](#listening-to-events) to respond to the setup transactions that occur the first time a user sells an item.
 
-#### Creating English Auctions
+#### イギリス式オークションを作成する
 
 English Auctions are auctions that start at a small amount (we recommend even doing 0!) and increase with every bid. At expiration time, the item sells to the highest bidder.
 
@@ -290,7 +290,7 @@ const auction = await openseaSDK.createSellOrder({
 
 Note that auctions aren't supported with Ether directly due to limitations in Ethereum, so you have to use an ERC20 token, like Wrapped Ether (WETH), a stablecoin like DAI, etc. See [Using ERC-20 Tokens Instead of Ether](#using-erc-20-tokens-instead-of-ether) for more info.
 
-### Fetching Orders
+### オーダーをフェッチする
 
 To retrieve a list of offers and auction on an asset, you can use an instance of the `OpenSeaAPI` exposed on the client. Parameters passed into API filter objects are camel-cased and serialized before being sent as [OpenSea API parameters](https://docs.opensea.io/v2.0/reference):
 
@@ -342,7 +342,7 @@ The available API filters for the orders endpoint is documented in the `OrdersQu
   offset?: number,
 ```
 
-### Buying Items
+### アイテムを購入する
 
 To buy an item , you need to **fulfill a sell order**. To do that, it's just one call:
 
@@ -356,7 +356,7 @@ Note that the `fulfillOrder` promise resolves when the transaction has been conf
 
 If the order is a sell order (`order.side === "ask"`), the taker is the _buyer_ and this will prompt the buyer to pay for the item(s).
 
-### Accepting Offers
+### オファーを承認する
 
 Similar to fulfilling sell orders above, you need to fulfill a buy order on an item you own to receive the tokens in the offer.
 
@@ -368,7 +368,7 @@ await this.props.openseaSDK.fulfillOrder({ order, accountAddress })
 
 If the order is a buy order (`order.side === "bid"`), then the taker is the _owner_ and this will prompt the owner to exchange their item(s) for whatever is being offered in return. See [Listening to Events](#listening-to-events) below to respond to the setup transactions that occur the first time a user accepts a bid.
 
-### Transferring Items or Coins (Gifting)
+### アイテムや暗号通貨を送る(ギフティング)
 
 A handy feature in OpenSea.js is the ability to transfer any supported asset (fungible or non-fungible tokens) in one line of JavaScript.
 
@@ -420,11 +420,11 @@ const transactionHash = await openseaSDK.transfer({
 
 For more information, check out the documentation for WyvernSchemas on https://projectopensea.github.io/opensea-js/.
 
-## Advanced
+## 高度な機能
 
 Interested in purchasing for users server-side or with a bot, scheduling future orders, or making bids in different ERC-20 tokens? OpenSea.js can help with that.
 
-### Scheduling Future Listings
+### 出品を予約する
 
 You can create sell orders that aren't fulfillable until a future date. Just pass in a `listingTime` (a UTC timestamp in seconds) to your SDK instance:
 
@@ -438,7 +438,7 @@ const auction = await openseaSDK.createSellOrder({
 })
 ```
 
-### Purchasing Items for Other Users
+### 代理で商品を購入する
 
 You can buy and transfer an item to someone else in one step! Just pass the `recipientAddress` parameter:
 
@@ -453,7 +453,7 @@ await this.props.openseaSDK.fulfillOrder({
 
 If the order is a sell order (`order.side === "ask"`), the taker is the _buyer_ and this will prompt the buyer to pay for the item(s) but send them to the `recipientAddress`. If the order is a buy order ( `"bid"`), the taker is the _seller_ but the bid amount be sent to the `recipientAddress`.
 
-### Bulk Transfers
+### 一括送信
 
 A handy feature in OpenSea.js is the ability to transfer multiple items at once in a single transaction. This works by grouping together as many `transferFrom` calls as the Ethereum gas limit allows, which is usually under 30 items, for most item contracts.
 
@@ -471,7 +471,7 @@ const transactionHash = await openseaSDK.transferAll({
 
 This will automatically approve the assets for trading and confirm the transaction for sending them.
 
-### Using ERC-20 Tokens Instead of Ether
+### イーサの代わりにERC-20トークンを使用する
 
 Here's an example of listing the Genesis CryptoKitty for $100! No more needing to worry about the exchange rate:
 
@@ -505,7 +505,7 @@ const order = await openseaSDK.api.getOrders({
 - MANA, Decentraland's currency: https://etherscan.io/token/0x0f5d2fb29fb7d3cfee444a200298f468908cc942
 - DAI, Maker's stablecoin, pegged to $1 USD: https://etherscan.io/token/0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
 
-### Private Auctions
+### プライベート・オークション
 
 Now you can make auctions and listings that can only be fulfilled by an address or email of your choosing. This allows you to negotiate a price in some channel and sell for your chosen price on OpenSea, **without having to trust that the counterparty will abide by your terms!**
 
@@ -524,7 +524,7 @@ const listing = await openseaSDK.createSellOrder({
 })
 ```
 
-### Listening to Events
+### イベントを発火させる
 
 Events are fired whenever transactions or orders are being created, and when transactions return receipts from recently mined blocks on the Ethereum blockchain.
 
@@ -604,21 +604,21 @@ handleSDKEvents() {
 
 To remove all listeners and start over, just call `openseaSDK.removeAllListeners()`.
 
-## Learning More
+## もっと詳しく
 
 Auto-generated documentation for each export is available [here](https://projectopensea.github.io/opensea-js/).
 
-### Example Code
+### サンプルコード
 
 Check out the [Ship's Log](https://github.com/ProjectOpenSea/ships-log), built with the SDK, which shows the recent orders in the OpenSea orderbook.
 
 Also check out the [Mythereum marketplace](https://mythereum.io/marketplace), which is entirely powered by OpenSea.js.
 
-## Migrating to version 1.0
+## バージョン1.0への移行
 
 See the [Changelog](CHANGELOG.md).
 
-## Development Information
+## 開発するにあたって
 
 **Setup**
 
@@ -662,7 +662,7 @@ yarn docs-build
 
 Contributions welcome! Please use GitHub issues for suggestions/concerns - if you prefer to express your intentions in code, feel free to submit a pull request.
 
-## Diagnosing Common Issues
+## トラブルシューティング
 
 - Is the `expirationTime` in the future? If not, change it to a time in the future.
 
@@ -670,7 +670,7 @@ Contributions welcome! Please use GitHub issues for suggestions/concerns - if yo
 
 - Is your computer's internal clock accurate? If not, try enabling automatic clock adjustment locally or following [this tutorial](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html) to update an Amazon EC2 instance.
 
-## Testing your branch locally
+## ローカルでブランチをテストする
 
 ```sh
 yarn link # in opensea-js repo
