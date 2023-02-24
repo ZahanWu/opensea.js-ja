@@ -157,8 +157,9 @@ const asset: OpenSeaAsset = await openseaSDK.api.getAsset({
 #### 残高と所有権を確認する
 
 The nice thing about the `Asset` type is that it unifies logic between fungibles, non-fungibles, and semi-fungibles.
+`アセット`型の良いところは、ファンジブルとノン・ファンジブル、セミ・ファンジブルの間でロジックを統一してくれることです。
 
-Once you have an `Asset`, you can see how many any account owns, regardless of whether it's an ERC-20 token or a non-fungible good:
+`アセット`を取得すると、ERC-20かノンファンジブルかに関係なく、どのアカウントがいくつ所有しているかを確認することができます：
 
 ```JavaScript
 
@@ -175,7 +176,7 @@ const balance = await openseaSDK.getAssetBalance({
 const ownsKitty = balance.greaterThan(0)
 ```
 
-You can use this same method for fungible ERC-20 tokens like wrapped ETH (WETH). As a convenience, you can use this fungible wrapper for checking fungible balances:
+この方法はWETHのようなERC-20トークンでも使用できます。便宜上、ファンジブルトークンの残高を確認する際には、以下のようなファンジブル用のラッパーを使用すると良いでしょう：
 
 ```JavaScript
 const balanceOfWETH = await openseaSDK.getTokenBalance({
