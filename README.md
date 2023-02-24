@@ -266,16 +266,16 @@ const listing = await openseaSDK.createSellOrder({
 })
 ```
 
-`startAmount`と`endAmount`の単位はEther（ETH）です。他のERC-20トークンを使用したい場合は、[イーサの代わりにERC-20トークンを使用する](#イーサの代わりにerc-20トークンを使用する)をご確認ください。
+`startAmount`と`endAmount`の単位はイーサ（ETH）です。他のERC-20トークンを使用したい場合は、[イーサの代わりにERC-20トークンを使用する](#イーサの代わりにerc-20トークンを使用する)をご確認ください。
 
 ユーザーがアイテムを初めて出品した際に生じる、セットアップのトランザクションに対応するには[イベントを処理する](#イベントを処理する)をご確認ください。
 
 
 #### イギリス式オークションを作成する
 
-English Auctions are auctions that start at a small amount (we recommend even doing 0!) and increase with every bid. At expiration time, the item sells to the highest bidder.
+イギリス式オークションとは、少額からスタートし、入札の度に金額が上がっていく形式のオークションです（OpenSeaでは0円での開始もおすすめしています！）。終了時点で最も高い金額で入札した人に商品が売却されます。
 
-To create an English Auction, create a listing that waits for the highest bid by setting `waitForHighestBid` to `true`:
+イギリス式オークションを作成するには、`waitForHighestBid`を`true`に設定して、最高入札額を待つ形式の出品を作成します：
 
 ```JavaScript
 
@@ -297,7 +297,7 @@ const auction = await openseaSDK.createSellOrder({
 })
 ```
 
-Note that auctions aren't supported with Ether directly due to limitations in Ethereum, so you have to use an ERC20 token, like Wrapped Ether (WETH), a stablecoin like DAI, etc. See [Using ERC-20 Tokens Instead of Ether](#using-erc-20-tokens-instead-of-ether) for more info.
+なお、Ethereumの制限によりイーサを直接使ったオークションはサポートされていないので、ステーブルコインのDAIやWETHなどのERC20トークンを使う必要があります。詳しくは[イーサの代わりにERC-20トークンを使用する](#イーサの代わりにerc-20トークンを使用する)をご確認ください。
 
 ### オーダーをフェッチする
 
