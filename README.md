@@ -301,7 +301,7 @@ const auction = await openseaSDK.createSellOrder({
 
 ### オーダーをフェッチする
 
-To retrieve a list of offers and auction on an asset, you can use an instance of the `OpenSeaAPI` exposed on the client. Parameters passed into API filter objects are camel-cased and serialized before being sent as [OpenSea API parameters](https://docs.opensea.io/v2.0/reference):
+特定のアセットに関するオファーとオークションの一覧を取得するには、クライアント側に公開されている`OpenSeaAPI`のインスタンスを使用できます。APIフィルタのオブジェクトに渡されるパラメータは、キャメルケースに変換され、シリアライズされてから[OpenSea API parameters](https://docs.opensea.io/v2.0/reference)として送信されます
 
 ```JavaScript
 // Get offers (bids), a.k.a. orders where `side == 0`
@@ -319,11 +319,12 @@ const { orders, count } = await openseaSDK.api.getOrders({
 }, 2)
 ```
 
-Note that the listing price of an asset is equal to the `currentPrice` of the **lowest valid sell order** on the asset. Users can lower their listing price without invalidating previous sell orders, so all get shipped down until they're canceled, or one is fulfilled.
+アセットの出品価格は、そのアセットに対する**最も低い有効な売り注文**の`currentPrice`と等しくなる点に注意してください。ユーザーは過去の売り注文を取り消さなくても出品価格を下げることができるので、全ての売り注文がキャンセルされるか、または売り注文のどれかが成約するまで、それら全ての売り注文が配信され続けます。
 
-To learn more about signatures, makers, takers, listingTime vs createdTime and other kinds of order terminology, please read the [**Terminology Section**](https://docs.opensea.io/reference#terminology) of the API Docs.
+signatures, makers, takers, listingTime vs createdTimeなどのオーダー用語については、API Docsの[**Terminology Section**](https://docs.opensea.io/reference#terminology)をご覧ください。
 
 The available API filters for the orders endpoint is documented in the `OrdersQueryOptions` interface below, but see the main [API Docs](https://docs.opensea.io/reference#reference-getting-started) for a playground, along with more up-to-date and detailed explanantions.
+オーダーのエンドポイントで利用可能なAPIフィルタは、以下の`OrdersQueryOptions`インターフェースに記載されています。より詳細な最新の情報はメインの[APIドキュメント](https://docs.opensea.io/reference#reference-getting-started)を御覧ください。
 
 ```TypeScript
 /**
