@@ -452,7 +452,6 @@ const auction = await openseaSDK.createSellOrder({
 
 ### 代理でアイテムを購入する
 
-You can buy and transfer an item to someone else in one step! Just pass the `recipientAddress` parameter:
 `RECIPIENTADDRESS`パラメータを渡すことで、商品の購入から他人への転送までをワンステップで実行できます！：
 
 ```JavaScript
@@ -468,9 +467,9 @@ await this.props.openseaSDK.fulfillOrder({
 
 ### 一括送信
 
-A handy feature in OpenSea.js is the ability to transfer multiple items at once in a single transaction. This works by grouping together as many `transferFrom` calls as the Ethereum gas limit allows, which is usually under 30 items, for most item contracts.
+OpenSea.jsには、複数のアイテムを1つのトランザクションで一度に転送するという便利な機能があります。これは、イーサリアムのガスリミットが許す限界量（ほとんどのアイテムのコントラクトにおいて、おおむね30アイテム未満）まで`transferFrom`の呼び出しを一つにまとめることで実現しています。
 
-To make a bulk transfer, it's just one call:
+一括送信は以下の記述で呼び出せます：
 
 ```JavaScript
 const assets: Array<{tokenId: string; tokenAddress: string}> = [...]
@@ -482,7 +481,8 @@ const transactionHash = await openseaSDK.transferAll({
 })
 ```
 
-This will automatically approve the assets for trading and confirm the transaction for sending them.
+これにより、自動的にアセットのトレードが許可され、送信用トランザクションが承認されます。
+
 
 ### イーサの代わりにERC-20トークンを使用する
 
