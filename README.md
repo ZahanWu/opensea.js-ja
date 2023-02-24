@@ -44,30 +44,33 @@ Published on [GitHub](https://github.com/ProjectOpenSea/opensea-js) and [npm](ht
 
 ## 概要
 
-This is the JavaScript SDK for [OpenSea](https://opensea.io), the largest marketplace for NFTs.
+こちらは最大のNFTマーケットプレイスである[OpenSea](https://opensea.io)のJavaScript SDKです。
 
-It allows developers to access the official orderbook, filter it, create buy orders (**offers**), create sell orders (**auctions**), and complete trades programmatically.
+開発者の方は、公式のオーダーブックへのアクセスや、データ簿絞り込み、買い注文（**オファー**）の作成、売り注文（**オークション**）の作成などの機能を利用でき、プログラム上で取引を完結させることが出来ます。
 
-Get started by [requesting an API key](https://docs.opensea.io/reference) and instantiating your own OpenSea SDK instance. Then you can create orders off-chain or fulfill orders on-chain, and listen to events (like `ApproveAllAssets` or `WrapEth`) in the process.
 
-Happy seafaring! ⛵️
+まずは[こちら](https://docs.opensea.io/reference)でAPIキーをリクエストしてから、OpenSea SDKのインスタンスを作成してください。その後、オフチェーンでのオーダーの作成や、オンチェーンでのオーダーの処理、イベントのリッスン（`ApproveAllAssets`や`WrapEth`等）などができるようになります。
+
+それでは、良い船旅を! ⛵️
+
 
 ## インストール
 
 We recommend switching to Node.js version 16 to make sure common crypto dependencies work. Execute `nvm use`, if you have Node Version Manager.
+一般的なクリプト関係の依存先が動作するように、Node.jsのバージョンを16に切り替えることをお勧めします。Node Version Managerを使用している場合は、`nvm use`を実行します。
 
-Then, in your project, run:
+その後、プロジェクト内で以下を実行してください:
 
 ```bash
 npm install --save opensea-js
 ```
 
-> **Warning**
-> Due to the use of git-url dependencies, versions of `npm` below 8.5.2 are incompatible with this package due to broken integrity checksum validation.
-> Above version 8.5.2, `npm` will no longer validate integrity checksums for git-url dependencies.
+> **警告**
+> バージョン8.5.2未満の`npm`は整合性チェックサムの検証に関してバグがあるため、git-urlでの依存関係を使用しているこのパッケージとは互換性がありません。
+> バージョン8.5.2以上の`npm`では、git-urlでの依存関係について整合性チェックサムの検証をしない仕様になっています。
 
-> **Warning**
-> To use `yarn` the following resolution is required to be added to your package.json:
+> **警告**
+> `yarn`を使用する場合は、package.jsonに以下のresolutionを追加してください：
 >
 > ```
 > "resolutions": {
@@ -75,9 +78,10 @@ npm install --save opensea-js
 >  }
 > ```
 
-Install [web3](https://github.com/ethereum/web3.js) too if you haven't already.
+[web3](https://github.com/ethereum/web3.js)をまだインストールしていない方は、事前にインストールしてください。
 
-If you run into an error while building the dependencies and you're on a Mac, run this:
+
+Macを使用している方で、依存関係の構築中にエラーが発生した場合は以下を実行してください：
 
 ```bash
 xcode-select --install # Install Command Line Tools if you haven't already.
@@ -87,9 +91,9 @@ sudo npm explore npm -g -- npm install node-gyp@latest # (Optional) update node-
 
 ## はじめに
 
-To get started, first request an API key [here](https://docs.opensea.io/reference). Note the terms of use for using API data.
+まず[こちら](https://docs.opensea.io/reference)から、APIデータを使用する際の利用規約をご確認の上、APIキーをリクエストしてください。
 
-Then, create a new OpenSeaJS client, called an OpenSeaSDK 🚢, using your Web3 provider:
+次に、お使いのWeb3プロバイダを使用して、新しいOpenSeaJSのクライアント（OpenSeaSDK🚢）を作成してください：
 
 ```JavaScript
 import * as Web3 from 'web3'
@@ -104,11 +108,13 @@ const openseaSDK = new OpenSeaSDK(provider, {
 })
 ```
 
-**NOTE:** for testnet, please use `Network.Goerli` as the `networkName` - Rinkeby was deprecated in 2022.
+**注意:** テストネットでは`networkName`として`Network.Goerli`を使用してください - Rinkebyは2022年に非推奨となりました。
 
-**NOTE:** Using the sample Infura provider above won't let you authorize transactions, which are needed when approving and trading assets and currency. To make transactions, you need a provider with a private key or mnemonic set.
+**注意:** 上記のサンプルに記載されているInfuraプロバイダでは、アセットや通貨のトレードや承認に必要なトランザクションの認証ができません。トランザクションを作成するには、秘密鍵やニーモニックのセットを持つプロバイダが必要になります。
 
-In a browser with web3 or an extension like [MetaMask](https://metamask.io/) or [Dapper](http://www.meetdapper.com/), you can use `window.ethereum` (or `window.web3.currentProvider` for legacy mobile web3 browsers) to access the native provider. In a Node.js script, you can follow [this example](https://github.com/ProjectOpenSea/opensea-creatures/blob/master/scripts/sell.js) to use a custom mnemonic.
+
+[MetaMask](https://metamask.io/)、[Dapper](http://www.meetdapper.com/) などの拡張機能やWeb3を搭載したブラウザでは、`window.ethereum`(レガシーのモバイルweb3ブラウザでは `window.web3.currentProvider`)を使用してネイティブプロバイダーにアクセスできます。Node.jsの場合は、[この例](https://github.com/ProjectOpenSea/opensea-creatures/blob/master/scripts/sell.js)に従って、カスタムニーモニックを使用できます。
+
 
 ### アセットをフェッチする
 
