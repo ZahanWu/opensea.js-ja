@@ -319,7 +319,7 @@ const { orders, count } = await openseaSDK.api.getOrders({
 }, 2)
 ```
 
-アセットの出品価格は、そのアセットに対する**最も低い有効な売り注文**の`currentPrice`と等しくなる点に注意してください。ユーザーは過去の売り注文を取り消さなくても出品価格を下げることができるので、全ての売り注文がキャンセルされるか、または売り注文のどれかが成約するまで、それら全ての売り注文が配信され続けます。
+アセットの出品価格は、そのアセットに対する**最も低い有効な売り注文**の`currentPrice`と等しくなる点に注意してください。ユーザーは過去の売り注文を取り消さなくても出品価格を下げることができるので、全ての売り注文がキャンセルされるか、または売り注文のどれかが成立するまで、それら全ての売り注文が配信され続けます。
 
 signatures, makers, takers, listingTime vs createdTimeなどのオーダー用語については、API Docsの[**Terminology Section**](https://docs.opensea.io/reference#terminology)をご覧ください。
 
@@ -353,7 +353,7 @@ signatures, makers, takers, listingTime vs createdTimeなどのオーダー用�
 
 ### アイテムを購入する
 
-アイテムを購入するには、**売り注文を成約させる必要があります**。以下のように処理できます：
+アイテムを購入するには、**売り注文を成立させる必要があります**。そのためには、以下のように処理します：
 
 
 ```JavaScript
@@ -364,11 +364,12 @@ const transactionHash = await this.props.openseaSDK.fulfillOrder({ order, accoun
 
 `fullfillOrder`のPromiseは、トランザクションが承認され、ブロックチェーンに取り込まれた際にresolveされるという点に注意してください。その前にトランザクションのハッシュを取得するには、`TransactionCreated`イベントのイベントリスナーを追加します（[イベントをリスニングする](#イベントをリスニングする)をご確認ください）。
 
-オーダーが売り注文(`order.side === "ask"`)の場合、テイカーが_購入者_となり、購入者にアイテムの代金を支払うよう促します。
+オーダーが売り注文(`order.side === "ask"`)の場合、テイカーは_購入者_なので、購入者にアイテムの代金を支払うよう促します。
 
 ### オファーを承認する
 
 Similar to fulfilling sell orders above, you need to fulfill a buy order on an item you own to receive the tokens in the offer.
+上記の売り注文を成立させるのと同様に、オファーで提示されているトークンを受け取るためには、自分が所有しているアイテムに対する買い注文を成立させる必要があります。
 
 ```JavaScript
 const order = await openseaSDK.api.getOrder({ side: "bid", ... })
@@ -376,7 +377,7 @@ const accountAddress = "0x..." // The owner's wallet address, also the taker
 await this.props.openseaSDK.fulfillOrder({ order, accountAddress })
 ```
 
-If the order is a buy order (`order.side === "bid"`), then the taker is the _owner_ and this will prompt the owner to exchange their item(s) for whatever is being offered in return. See [Listening to Events](#listening-to-events) below to respond to the setup transactions that occur the first time a user accepts a bid.
+オーダーが買い注文(`order.side === "bid"`)の場合、テイカーは _所有者_ なので、所有者にアイテムと代金を交換するよう促します。ユーザーが初めて入札を承認した時に生じるセットアップのトランザクションに対応するには、以下の[イベントをリスニングする](#イベントをリスニングする)ご確認ください。
 
 ### アイテムや暗号通貨を送る(ギフティング)
 
