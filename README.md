@@ -246,7 +246,7 @@ const offer = await openseaSDK.createBuyOrder({
 
 ### アイテムを出品/販売する
 
-To sell an asset, call `createSellOrder`. You can do a fixed-price listing, where `startAmount` is equal to `endAmount`, or a declining [Dutch auction](https://en.wikipedia.org/wiki/Dutch_auction), where `endAmount` is lower and the price declines until `expirationTime` is hit:
+アセットを出品するには、`createSellOrder` を呼び出します。`startAmount`と`endAmount`が等しい固定価格での出品、または`expirationTime`に達するまで価格が下がり続け、`startAmount`より`endAmount`の方が低くなる[ダッチ・オークション](https://en.wikipedia.org/wiki/Dutch_auction) （価格下降式） で出品できます：
 
 ```JavaScript
 // Expire this auction one day from now.
@@ -266,9 +266,10 @@ const listing = await openseaSDK.createSellOrder({
 })
 ```
 
-The units for `startAmount` and `endAmount` are Ether, ETH. If you want to specify another ERC-20 token to use, see [Using ERC-20 Tokens Instead of Ether](#using-erc-20-tokens-instead-of-ether).
+`startAmount`と`endAmount`の単位はEther（ETH）です。他のERC-20トークンを使用したい場合は、[イーサの代わりにERC-20トークンを使用する](#イーサの代わりにerc-20トークンを使用する)をご確認ください。
 
-See [Listening to Events](#listening-to-events) to respond to the setup transactions that occur the first time a user sells an item.
+ユーザーがアイテムを初めて出品した際に生じる、セットアップのトランザクションに対応するには[イベントを処理する](#イベントを処理する)をご確認ください。
+
 
 #### イギリス式オークションを作成する
 
