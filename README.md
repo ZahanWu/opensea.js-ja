@@ -467,7 +467,7 @@ await this.props.openseaSDK.fulfillOrder({
 
 ### 一括送信
 
-OpenSea.jsには、複数のアイテムを1つのトランザクションで一度に転送するという便利な機能があります。これは、イーサリアムのガスリミットが許す限界量（ほとんどのアイテムのコントラクトにおいて、おおむね30アイテム未満）まで`transferFrom`の呼び出しを一つにまとめることで実現しています。
+OpenSea.jsには、複数のアイテムを1つのトランザクションでまとめて転送するという便利な機能があります。これは、イーサリアムのガスリミットが許す限界量（ほとんどのアイテムのコントラクトにおいて、おおむね30アイテム未満）まで`transferFrom`の呼び出しをまとめることで実現しています。
 
 一括送信は以下の記述で呼び出せます：
 
@@ -486,7 +486,8 @@ const transactionHash = await openseaSDK.transferAll({
 
 ### イーサの代わりにERC-20トークンを使用する
 
-Here's an example of listing the Genesis CryptoKitty for $100! No more needing to worry about the exchange rate:
+Here's an example of listing the Genesis CryptoKitty for $100! No more needing to worry about the exchange rate
+以下はGenesis CryptoKittyを$100で出品した例です!もうレートを気にする必要はありません：
 
 ```JavaScript
 // Token address for the DAI stablecoin, which is pegged to $1 USD
@@ -502,7 +503,7 @@ const auction = await openseaSDK.createSellOrder({
 })
 ```
 
-You can use `getPaymentTokens` to search for tokens by symbol name. And you can even list all orders for a specific ERC-20 token by querying the API:
+`getPaymentTokens`を使用することで、シンボル名でトークンを検索できます。また、API経由で特定のERC-20トークンに対するすべてのオーダーをリストアップすることもできます：
 
 ```JavaScript
 const token = (await openseaSDK.api.getPaymentTokens({ symbol: 'MANA'})).tokens[0]
