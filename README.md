@@ -117,9 +117,10 @@ const openseaSDK = new OpenSeaSDK(provider, {
 
 ### アセットをフェッチする
 
-Assets are items on OpenSea. They can be non-fungible (conforming to standards like ERC721), semi-fungible (like ERC1155 assets), and even fungible (ERC20).
+アセットとはOpenSea上のアイテムで、ERC721のような標準規格に準拠した非代替性（ノン・ファンジブル）のものから、ERC1155のような準代替性（セミ・ファンジブル）のもの、さらにはERC20のような代替可能（ファンジブル）なものまで対応しています。
 
-Assets are represented by the `Asset` type, defined in TypeScript:
+アセットはTypeScriptで定義されている`Asset`型で表現されます：
+
 
 ```TypeScript
 /**
@@ -139,9 +140,9 @@ export interface Asset {
 }
 ```
 
-The `Asset` type is the minimal type you need for most marketplace actions. `WyvernSchemaName` is optional. If omitted, most actions will assume you're referring to a non-fungible, ERC721 asset. Other options include 'ERC20' and 'ERC1155'. You can import `import { WyvernSchemaName } from "opensea-js/lib/types"` to get the full range of schemas supported.
+`Asset`型は、マーケットプレイス上でのほとんどのアクションで必要となる最低限の型です。`WyvernSchemaName`は任意の値で、省略した場合、ほとんどのアクションはERC721の非代替性アセットを参照しているとみなされます。他のオプションには'ERC20'と'ERC1155'があります。`import { WyvernSchemaName } from "opensea-js/lib/types"`のようにインポートすることで、サポートされている全てのスキーマを取得できます。
 
-You can fetch an asset using the `OpenSeaAPI`, which will return an `OpenSeaAsset` for you (`OpenSeaAsset` extends `Asset`):
+`OpenSeaAPI`を使用してアセットをフェッチすることで、`OpenSeaAsset` を取得できます (`OpenSeaAsset`は`Asset`を継承しています)：
 
 ```TypeScript
 const asset: OpenSeaAsset = await openseaSDK.api.getAsset({
@@ -150,7 +151,8 @@ const asset: OpenSeaAsset = await openseaSDK.api.getAsset({
 })
 ```
 
-Note that fungible ERC20 assets have `null` as their token id.
+代替可能なERC20アセットの場合は、トークンIDが`null`となる点にご注意ください。
+
 
 #### 残高と所有権を確認する
 
