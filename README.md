@@ -486,7 +486,6 @@ const transactionHash = await openseaSDK.transferAll({
 
 ### イーサの代わりにERC-20トークンを使用する
 
-Here's an example of listing the Genesis CryptoKitty for $100! No more needing to worry about the exchange rate
 以下はGenesis CryptoKittyを$100で出品した例です!もうレートを気にする必要はありません：
 
 ```JavaScript
@@ -514,10 +513,10 @@ const order = await openseaSDK.api.getOrders({
 })
 ```
 
-**Fun note:** soon, all ERC-20 tokens will be allowed! This will mean you can create crazy offers on crypto collectibles **using your own ERC-20 token**. However, opensea.io will only display offers and auctions in ERC-20 tokens that it knows about, optimizing the user experience of order takers. Orders made with the following tokens will be shown on OpenSea:
+**備考:** 近々、全てのERC-20トークンが利用可能になります！これにより、暗号資産のコレクションに**あなた独自のERC-20トークンを使って**クレイジーなオファーを出せるということになります。しかし、opensea.ioでは、オーダーを受け取るユーザーの体験を最適化するため、把握しているERC-20トークンによるオファーとオークションのみを表示します。以下のトークンで作成されたオーダーに関してはOpenSea上に表示されます：
 
-- MANA, Decentraland's currency: https://etherscan.io/token/0x0f5d2fb29fb7d3cfee444a200298f468908cc942
-- DAI, Maker's stablecoin, pegged to $1 USD: https://etherscan.io/token/0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+- MANA, Decentralandの通貨: https://etherscan.io/token/0x0f5d2fb29fb7d3cfee444a200298f468908cc942
+- DAI,米ドルの$1にペッグされているMakerのステーブルコイン: https://etherscan.io/token/0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
 
 ### プライベート・オークション
 
