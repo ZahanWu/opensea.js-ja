@@ -210,9 +210,10 @@ OpenSeaのユーザーが所有しているアイテムに対して、売り手�
 
 #### ENSオークションに入札する
 
-The Ethereum Name Service (ENS) is auctioning short (3-6 character) names that can be used for labeling wallet addresses and more. Learn more on the [ENS FAQ](https://opensea.io/ens).
+Ethereum Name Service（ENS）では、ウォレットアドレスのラベル付けなどに使用できる短い名前（3〜6文字）をオークションに出品しています。詳しくは[ENS FAQ](https://opensea.io/ens)でご確認ください。
 
-To bid, you must use the ENS Short Name schema:
+
+入札するには、ENS Short Nameスキーマを使用する必要があります：
 
 ```JavaScript
 const {
@@ -241,7 +242,7 @@ const offer = await openseaSDK.createBuyOrder({
 
 #### オファーの上限
 
-Note: The total value of buy orders must not exceed 1000 x wallet balance.
+注意: 買い注文の合計金額は、ウォレット残高×1000 を超えないようにしてください。
 
 ### アイテムを出品/販売する
 
