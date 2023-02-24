@@ -353,7 +353,6 @@ signatures, makers, takers, listingTime vs createdTimeなどのオーダー用�
 
 ### アイテムを購入する
 
-To buy an item , you need to **fulfill a sell order**. To do that, it's just one call:
 アイテムを購入するには、**売り注文を成約させる必要があります**。以下のように処理できます：
 
 
@@ -363,10 +362,9 @@ const accountAddress = "0x..." // The buyer's wallet address, also the taker
 const transactionHash = await this.props.openseaSDK.fulfillOrder({ order, accountAddress })
 ```
 
-`fullfillOrder`のPromiseは、トランザクションが承認され、ブロックチェーンに取り込まれた際にresolveされるという点に注意してください。その前にトランザクションのハッシュを取得するには、`TransactionCreated`イベントのイベントリスナーを追加します（[イベントをリスニングする](#イベントをリスニングする)をご確認してください）。
+`fullfillOrder`のPromiseは、トランザクションが承認され、ブロックチェーンに取り込まれた際にresolveされるという点に注意してください。その前にトランザクションのハッシュを取得するには、`TransactionCreated`イベントのイベントリスナーを追加します（[イベントをリスニングする](#イベントをリスニングする)をご確認ください）。
 
-If the order is a sell order (`order.side === "ask"`), the taker is the _buyer_ and this will prompt the buyer to pay for the item(s).
-オーダーが売り注文(`order.side === "ask"`)の場合、受注者は _buyer_ で、これは買い手に商品の代金を支払うよう促します。
+オーダーが売り注文(`order.side === "ask"`)の場合、テイカーが_購入者_となり、購入者にアイテムの代金を支払うよう促します。
 
 ### オファーを承認する
 
