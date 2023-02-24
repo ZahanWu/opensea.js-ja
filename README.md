@@ -34,7 +34,7 @@ Published on [GitHub](https://github.com/ProjectOpenSea/opensea-js) and [npm](ht
   - [一括送信](#一括送信)
   - [イーサの代わりにERC-20トークンを使用する](#イーサの代わりにerc-20トークンを使用する)
   - [プライベート・オークション](#プライベートオークション)
-  - [イベントを処理する](#イベントを処理する)
+  - [イベントをリスニングする](#イベントをリスニングする)
 - [もっと詳しく](#もっと詳しく)
   - [サンプルコード](#サンプルコード)
 - [バージョン1.0への移行](#バージョン10への移行)
@@ -268,7 +268,7 @@ const listing = await openseaSDK.createSellOrder({
 
 `startAmount`と`endAmount`の単位はイーサ（ETH）です。他のERC-20トークンを使用したい場合は、[イーサの代わりにERC-20トークンを使用する](#イーサの代わりにerc-20トークンを使用する)をご確認ください。
 
-ユーザーがアイテムを初めて出品した際に生じる、セットアップのトランザクションに対応するには[イベントを処理する](#イベントを処理する)をご確認ください。
+ユーザーがアイテムを初めて出品した際に生じる、セットアップのトランザクションに対応するには[イベントをリスニングする](#イベントをリスニングする)をご確認ください。
 
 
 #### イギリス式オークションを作成する
@@ -323,8 +323,7 @@ const { orders, count } = await openseaSDK.api.getOrders({
 
 signatures, makers, takers, listingTime vs createdTimeなどのオーダー用語については、API Docsの[**Terminology Section**](https://docs.opensea.io/reference#terminology)をご覧ください。
 
-The available API filters for the orders endpoint is documented in the `OrdersQueryOptions` interface below, but see the main [API Docs](https://docs.opensea.io/reference#reference-getting-started) for a playground, along with more up-to-date and detailed explanantions.
-オーダーのエンドポイントで利用可能なAPIフィルタは、以下の`OrdersQueryOptions`インターフェースに記載されています。より詳細な最新の情報はメインの[APIドキュメント](https://docs.opensea.io/reference#reference-getting-started)を御覧ください。
+オーダーのエンドポイントで利用可能なAPIフィルタは、以下の`OrdersQueryOptions`インターフェースに記載されています。より詳しい最新の情報はメインの[APIドキュメント](https://docs.opensea.io/reference#reference-getting-started)からご確認いただけます。
 
 ```TypeScript
 /**
@@ -355,6 +354,8 @@ The available API filters for the orders endpoint is documented in the `OrdersQu
 ### アイテムを購入する
 
 To buy an item , you need to **fulfill a sell order**. To do that, it's just one call:
+アイテムを購入するには、**売り注文を成約させる必要があります**。以下のように処理できます：
+
 
 ```JavaScript
 const order = await openseaSDK.api.getOrder({ side: "ask", ... })
@@ -362,9 +363,10 @@ const accountAddress = "0x..." // The buyer's wallet address, also the taker
 const transactionHash = await this.props.openseaSDK.fulfillOrder({ order, accountAddress })
 ```
 
-Note that the `fulfillOrder` promise resolves when the transaction has been confirmed and mined to the blockchain. To get the transaction hash before this happens, add an event listener (see [Listening to Events](#listening-to-events)) for the `TransactionCreated` event.
+`fullfillOrder`のPromiseは、トランザクションが承認され、ブロックチェーンに取り込まれた際にresolveされるという点に注意してください。その前にトランザクションのハッシュを取得するには、`TransactionCreated`イベントのイベントリスナーを追加します（[イベントをリスニングする](#イベントをリスニングする)をご確認してください）。
 
 If the order is a sell order (`order.side === "ask"`), the taker is the _buyer_ and this will prompt the buyer to pay for the item(s).
+オーダーが売り注文(`order.side === "ask"`)の場合、受注者は _buyer_ で、これは買い手に商品の代金を支払うよう促します。
 
 ### オファーを承認する
 
@@ -534,7 +536,7 @@ const listing = await openseaSDK.createSellOrder({
 })
 ```
 
-### イベントを処理する
+### イベントをリスニングする
 
 Events are fired whenever transactions or orders are being created, and when transactions return receipts from recently mined blocks on the Ethereum blockchain.
 
