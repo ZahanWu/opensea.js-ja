@@ -34,7 +34,7 @@ Published on [GitHub](https://github.com/ProjectOpenSea/opensea-js) and [npm](ht
   - [一括送信](#一括送信)
   - [イーサの代わりにERC-20トークンを使用する](#イーサの代わりにerc-20トークンを使用する)
   - [プライベート・オークション](#プライベートオークション)
-  - [イベントを発火させる](#イベントを発火させる)
+  - [イベントを処理する](#イベントを処理する)
 - [もっと詳しく](#もっと詳しく)
   - [サンプルコード](#サンプルコード)
 - [バージョン1.0への移行](#バージョン10への移行)
@@ -49,7 +49,7 @@ Published on [GitHub](https://github.com/ProjectOpenSea/opensea-js) and [npm](ht
 開発者の方は、公式のオーダーブックへのアクセスや、データ簿絞り込み、買い注文（**オファー**）の作成、売り注文（**オークション**）の作成などの機能を利用でき、プログラム上で取引を完結させることが出来ます。
 
 
-まずは[こちら](https://docs.opensea.io/reference)でAPIキーをリクエストしてから、OpenSea SDKのインスタンスを作成してください。その後、オフチェーンでのオーダーの作成や、オンチェーンでのオーダーの処理、イベントのリッスン（`ApproveAllAssets`や`WrapEth`等）などができるようになります。
+まずは[こちら](https://docs.opensea.io/reference)でAPIキーをリクエストしてから、OpenSea SDKのインスタンスを作成してください。その後、オフチェーンでのオーダーの作成や、オンチェーンでのオーダーの処理、イベントの処理（`ApproveAllAssets`や`WrapEth`等）などができるようになります。
 
 それでは、良い船旅を! ⛵️
 
@@ -530,7 +530,7 @@ const listing = await openseaSDK.createSellOrder({
 })
 ```
 
-### イベントを発火させる
+### イベントを処理する
 
 Events are fired whenever transactions or orders are being created, and when transactions return receipts from recently mined blocks on the Ethereum blockchain.
 
