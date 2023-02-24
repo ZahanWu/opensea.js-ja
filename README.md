@@ -368,8 +368,7 @@ const transactionHash = await this.props.openseaSDK.fulfillOrder({ order, accoun
 
 ### オファーを承認する
 
-Similar to fulfilling sell orders above, you need to fulfill a buy order on an item you own to receive the tokens in the offer.
-上記の売り注文を成立させるのと同様に、オファーで提示されているトークンを受け取るためには、自分が所有しているアイテムに対する買い注文を成立させる必要があります。
+上記で売り注文を成立させたのと同様に、自分が所有しているアイテムに対する買い注文を成立させることで、オファーで提示されているトークンを受け取ることができます。
 
 ```JavaScript
 const order = await openseaSDK.api.getOrder({ side: "bid", ... })
@@ -381,9 +380,9 @@ await this.props.openseaSDK.fulfillOrder({ order, accountAddress })
 
 ### アイテムや暗号通貨を送る(ギフティング)
 
-A handy feature in OpenSea.js is the ability to transfer any supported asset (fungible or non-fungible tokens) in one line of JavaScript.
+OpenSea.jsの便利な機能として、サポートされているあらゆる（ファンジブル、ノンファンジブルの）アセットを1行のJavaScriptで転送できるというものがあります。
 
-To transfer an ERC-721 asset or an ERC-1155 asset, it's just one call:
+以下の記述だけで、ERC-721やERC-1155のアセットを転送できます：
 
 ```JavaScript
 
@@ -394,7 +393,7 @@ const transactionHash = await openseaSDK.transfer({
 })
 ```
 
-For fungible ERC-1155 assets, you can set `schemaName` to "ERC1155" and pass a `quantity` in to transfer multiple at once:
+ERC-1155のアセットでは、`schemaName`を"ERC1155"に設定し、`quantity`を設定することで一度に複数を転送することが可能です：
 
 ```JavaScript
 
@@ -410,9 +409,9 @@ const transactionHash = await openseaSDK.transfer({
 })
 ```
 
-To transfer fungible assets without token IDs, like ERC20 tokens, you can pass in an `OpenSeaFungibleToken` as the `asset`, set `schemaName` to "ERC20", and include `quantity` in base units (e.g. wei) to indicate how many.
+ERC20トークンのようなトークンIDを持たないファンジブルなアセットを転送するには、`OpenSeaFungibleToken`を`asset`として渡し、`schemaName`を"ERC20"に設定し、数量を`quantity`に基本単位（"wei"など）で指定します。
 
-Example for transfering 2 DAI ($2) to another address:
+例えば、2DAI（$2）を他のアドレスに送る場合は以下のようになります：
 
 ```JavaScript
 const paymentToken = (await openseaSDK.api.getPaymentTokens({ symbol: 'DAI'})).tokens[0]
@@ -429,7 +428,7 @@ const transactionHash = await openseaSDK.transfer({
 })
 ```
 
-For more information, check out the documentation for WyvernSchemas on https://projectopensea.github.io/opensea-js/.
+詳細については、[WyvernSchemasのドキュメント](https://projectopensea.github.io/opensea-js)を参照してください
 
 ## 高度な機能
 
