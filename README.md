@@ -156,7 +156,6 @@ const asset: OpenSeaAsset = await openseaSDK.api.getAsset({
 
 #### 残高と所有権を確認する
 
-The nice thing about the `Asset` type is that it unifies logic between fungibles, non-fungibles, and semi-fungibles.
 `アセット`型の良いところは、ファンジブルとノン・ファンジブル、セミ・ファンジブルの間でロジックを統一してくれることです。
 
 `アセット`を取得すると、ERC-20かノンファンジブルかに関係なく、どのアカウントがいくつ所有しているかを確認することができます：
@@ -187,7 +186,7 @@ const balanceOfWETH = await openseaSDK.getTokenBalance({
 
 ### オファーを作成する
 
-Once you have your asset, you can do this to make an offer on it:
+取得したアセットにオファーを出すには、以下のように処理します：
 
 ```JavaScript
 // Token ID and smart contract address for a non-fungible token:
@@ -207,7 +206,7 @@ const offer = await openseaSDK.createBuyOrder({
 })
 ```
 
-When you make an offer on an item owned by an OpenSea user, **that user will automatically get an email notifying them with the offer amount**, if it's above their desired threshold.
+OpenSeaのユーザーが所有しているアイテムに対して、売り手の希望金額を上回るオファーを出した場合、**オファー額を通知するメールが自動的に売り手に送信されます**。
 
 #### ENSオークションに入札する
 
