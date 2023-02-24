@@ -30,7 +30,7 @@ Published on [GitHub](https://github.com/ProjectOpenSea/opensea-js) and [npm](ht
   - [アイテムや暗号通貨を送る(ギフティング)](#アイテムや暗号通貨を送るギフティング)
 - [高度な機能](#高度な機能)
   - [出品を予約する](#出品を予約する)
-  - [代理で商品を購入する](#代理で商品を購入する)
+  - [代理でアイテムを購入する](#代理でアイテムを購入する)
   - [一括送信](#一括送信)
   - [イーサの代わりにERC-20トークンを使用する](#イーサの代わりにerc-20トークンを使用する)
   - [プライベート・オークション](#プライベートオークション)
@@ -364,7 +364,7 @@ const transactionHash = await this.props.openseaSDK.fulfillOrder({ order, accoun
 
 `fullfillOrder`のPromiseは、トランザクションが承認され、ブロックチェーンに取り込まれた際にresolveされるという点に注意してください。その前にトランザクションのハッシュを取得するには、`TransactionCreated`イベントのイベントリスナーを追加します（[イベントをリスニングする](#イベントをリスニングする)をご確認ください）。
 
-オーダーが売り注文(`order.side === "ask"`)の場合、テイカーは_購入者_なので、購入者にアイテムの代金を支払うよう促します。
+オーダーが売り注文(`order.side === "ask"`)の場合、テイカーは _購入者_ なので、購入者にアイテムの代金を支払うよう促します。
 
 ### オファーを承認する
 
@@ -432,11 +432,13 @@ const transactionHash = await openseaSDK.transfer({
 
 ## 高度な機能
 
-Interested in purchasing for users server-side or with a bot, scheduling future orders, or making bids in different ERC-20 tokens? OpenSea.js can help with that.
+サーバーサイドやbotを用いて購入を実行したり、オーダーを予約したり、異なるERC-20トークンで入札するような処理も、OpenSea.jsを用いて実現することが出来ます
 
 ### 出品を予約する
 
-You can create sell orders that aren't fulfillable until a future date. Just pass in a `listingTime` (a UTC timestamp in seconds) to your SDK instance:
+SDKインスタンスに`listingTime`(秒単位のUTCタイムスタンプ)を渡すことで、特定の日時まで成立不可の売り注文を作成できます：
+
+
 
 ```JavaScript
 const auction = await openseaSDK.createSellOrder({
@@ -448,9 +450,10 @@ const auction = await openseaSDK.createSellOrder({
 })
 ```
 
-### 代理で商品を購入する
+### 代理でアイテムを購入する
 
 You can buy and transfer an item to someone else in one step! Just pass the `recipientAddress` parameter:
+`RECIPIENTADDRESS`パラメータを渡すことで、商品の購入から他人への転送までをワンステップで実行できます！：
 
 ```JavaScript
 const order = await openseaSDK.api.getOrder({ side: "ask", ... })
@@ -461,7 +464,7 @@ await this.props.openseaSDK.fulfillOrder({
 })
 ```
 
-If the order is a sell order (`order.side === "ask"`), the taker is the _buyer_ and this will prompt the buyer to pay for the item(s) but send them to the `recipientAddress`. If the order is a buy order ( `"bid"`), the taker is the _seller_ but the bid amount be sent to the `recipientAddress`.
+オーダーが売り注文の場合(`order.side === "ask"`)、テイカーは _購入者_ なので、購入者にアイテムの代金の支払いを促しますが、アイテムは`recipientAddress`に送られます。オーダーが買い注文の場合(`"bid"`)、テイカーは _出品者_ ですが、落札額は`recipientAddress`に送られます。
 
 ### 一括送信
 
