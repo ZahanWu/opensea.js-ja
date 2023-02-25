@@ -191,7 +191,7 @@ const balanceOfWETH = await openseaSDK.getTokenBalance({
 ```JavaScript
 // ノンファンジブル・トークンのスマートコントラクトアドレスとトークンID：
 const { tokenId, tokenAddress } = YOUR_ASSET
-// The offerer's wallet address:
+// オファーを出した人のウォレットアドレス：
 const accountAddress = "0x1234..."
 
 const offer = await openseaSDK.createBuyOrder({
