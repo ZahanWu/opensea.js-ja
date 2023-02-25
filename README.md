@@ -558,7 +558,7 @@ handleSDKEvents() {
     })
     openSeaSDK.addListener(EventType.TransactionConfirmed, ({ transactionHash, event }) => {
       console.info({ transactionHash, event })
-      // Only reset your exchange UI if we're finishing an order fulfillment or cancellation
+      // OpenSea側でのオーダーの成立またはキャンセルを完了している場合のみ、取引所のUIをリセットしてください
       if (event == EventType.MatchOrders || event == EventType.CancelOrder) {
         dispatch({ type: ActionTypes.RESET_EXCHANGE })
       }
