@@ -201,7 +201,7 @@ const offer = await openseaSDK.createBuyOrder({
     schemaName // WyvernSchemaName（省略した場合、デフォルトでは'ERC721'になります。他には、'ERC20'と'ERC1155'があります。）
   },
   accountAddress,
-  // 支払いに使用するトークン（もしくは指定がない場合はWETH）の単位でのオファー金額：
+  // 支払いに使用するトークン（指定がない場合はWETH）の単位でのオファー金額：
   startAmount: 1.2,
 })
 ```
@@ -340,8 +340,8 @@ signatures, makers, takers, listingTime vs createdTimeなどのオーダー用�
   paymentTokenAddress?: string; // オーダーの支払いトークンのコントラクトアドレス
   tokenId?: number | string,
   tokenIds?: Array<number | string>,
-  listedAfter?: number | string, // listing_timeが指定した値（秒単位）より大きい
-  listedBefore?: number | string, // listing_timeが指定した値（秒単位）以下
+  listedAfter?: number | string, // listing_timeが指定した値（秒単位）より後
+  listedBefore?: number | string, // listing_timeが指定した値（秒単位）以前
   orderBy?: "created_date" | "eth_price", // 結果の並べ替え
   orderDirection?: "asc" | "desc", // 結果の並べ替えの順序
   onlyEnglish?: boolean, // イギリス式オークションのオーダーのみをreturn
