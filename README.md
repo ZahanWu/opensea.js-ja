@@ -682,12 +682,11 @@ Contributions welcome! Please use GitHub issues for suggestions/concerns - if yo
 
 ## トラブルシューティング
 
-- Is the `expirationTime` in the future? If not, change it to a time in the future.
-- `expirationTime`
+- `expirationTime`は将来の日時になっていますか？なっていない場合は、将来の日時で指定してください。
 
-- Are the input addresses all strings? If not, convert them to strings.
+- 入力されたアドレスは全て文字列になっていますか？なっていない場合は、文字列に変換したください。
 
-- Is your computer's internal clock accurate? If not, try enabling automatic clock adjustment locally or following [this tutorial](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html) to update an Amazon EC2 instance.
+- お使いのコンピュータの内部時計は正確ですか？もしそうでなければ、ローカルで時刻の自動調整を有効にするか、[このチュートリアル](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html)に従ってAmazon EC2インスタンスを設定してみてください。
 
 ## ローカルでブランチをテストする
 
