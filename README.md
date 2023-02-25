@@ -631,11 +631,11 @@ handleSDKEvents() {
 
 ## バージョン1.0への移行
 
-[Changelog](CHANGELOG.md)をご確認ください。
+[Changelog](https://github.com/ProjectOpenSea/opensea-js/blob/master/CHANGELOG.md)をご確認ください。
 
 ## 開発するにあたって
 
-**Setup**
+**セットアップ**
 
 開発を始める前に、必要なNPMの依存関係をインストールしてください：
 
@@ -643,43 +643,47 @@ handleSDKEvents() {
 npm install
 ```
 
-And install TypeScript if you haven't already:
+TypeScriptをまだインストールしていない場合は、インストールしてください：
 
 ```bash
 npm install -g tslint typescript
 ```
 
-**Build**
+**ビルド**
 
-Then, lint and build the library into the `lib` directory:
+次に、lintしてライブラリを`lib`ディレクトリにビルドします：
 
 ```bash
 npm run build
 ```
 
-Or run the tests:
+テストを実行する場合は：
 
 ```bash
 npm test
 ```
 
 Note that the tests require access to both Infura and the OpenSea API. The timeout is adjustable via the `test` script in `package.json`.
+テストする場合は、InfuraとOpenSea APIの両方へのアクセスが必要になります。タイムアウトは`package.json`内の`test`スクリプトで調整できます。
 
-**Generate Documentation**
+**ドキュメントの作成**
 
-Generate html docs, also available for browsing [here](https://projectopensea.github.io/opensea-js/):
+htmlドキュメントを生成します。[こちら](https://projectopensea.github.io/opensea-js/)からも閲覧可能です:
 
 ```bash
 yarn docs-build
 ```
 
-**Contributing**
+**コントリビュート**
 
 Contributions welcome! Please use GitHub issues for suggestions/concerns - if you prefer to express your intentions in code, feel free to submit a pull request.
+コントリビューションは歓迎です！提案や懸念点がある場合はGitHub issuesをご利用ください。コードから提案したい場合は、お気軽にプルリクエストを作成してください。
+
 
 ## トラブルシューティング
 
 - Is the `expirationTime` in the future? If not, change it to a time in the future.
+- `expirationTime`
 
 - Are the input addresses all strings? If not, convert them to strings.
 
