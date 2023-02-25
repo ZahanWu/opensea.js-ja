@@ -44,7 +44,7 @@ Published on [GitHub](https://github.com/ProjectOpenSea/opensea-js) and [npm](ht
 
 ## 概要
 
-こちらは最大のNFTマーケットプレイスである[OpenSea](https://opensea.io)のJavaScript SDKです。
+最大のNFTマーケットプレイスである[OpenSea](https://opensea.io)のJavaScript SDKです。
 
 このSDKを使用することで、公式のオーダーブックへのアクセスや、データの絞り込み、買い注文（**オファー**）の作成、売り注文（**オークション**）の作成などの機能を利用でき、プログラム上で取引を完結させることが出来ます。
 
@@ -516,7 +516,7 @@ const order = await openseaSDK.api.getOrders({
 **備考:** 近々、全てのERC-20トークンが利用可能になります！これにより、暗号資産のコレクションに**あなた独自のERC-20トークンを使って**クレイジーなオファーを出せるということになります。しかし、opensea.ioでは、オーダーを受け取るユーザーの体験を最適化するため、把握しているERC-20トークンによるオファーとオークションのみを表示します。以下のトークンで作成されたオーダーに関してはOpenSea上に表示されます：
 
 - MANA, Decentralandの通貨: https://etherscan.io/token/0x0f5d2fb29fb7d3cfee444a200298f468908cc942
-- DAI,米ドルの$1にペッグされているMakerのステーブルコイン: https://etherscan.io/token/0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
+- DAI, 米ドルの$1にペッグされているMakerのステーブルコイン: https://etherscan.io/token/0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
 
 ### プライベート・オークション
 
