@@ -674,10 +674,9 @@ htmlドキュメントを生成します。[こちら](https://projectopensea.gi
 yarn docs-build
 ```
 
-**コントリビュート**
+**コントリビューション**
 
-Contributions welcome! Please use GitHub issues for suggestions/concerns - if you prefer to express your intentions in code, feel free to submit a pull request.
-コントリビューションは歓迎です！提案や懸念点がある場合はGitHub issuesをご利用ください。コードから提案したい場合は、お気軽にプルリクエストを作成してください。
+皆様からのコントリビューションをお待ちしています！提案や懸念点がある場合はGitHub issuesをご利用ください。コードから提案したい場合は、お気軽にプルリクエストを作成してください。
 
 
 ## トラブルシューティング
