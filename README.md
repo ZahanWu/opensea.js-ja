@@ -83,9 +83,9 @@ npm install --save opensea-js
 Macを使用している方で、依存関係の構築中にエラーが発生した場合は以下を実行してください：
 
 ```bash
-xcode-select --install # Install Command Line Tools if you haven't already.
-sudo xcode-select --switch /Library/Developer/CommandLineTools # Enable command line tools
-sudo npm explore npm -g -- npm install node-gyp@latest # (Optional) update node-gyp
+xcode-select --install # Command Line Toolsをまだインストールしていない場合は、インストールしてください
+sudo xcode-select --switch /Library/Developer/CommandLineTools # Command Line Toolsを有効化
+sudo npm explore npm -g -- npm install node-gyp@latest # (任意) node-gypをアップデート
 ```
 
 ## はじめに
@@ -98,7 +98,7 @@ sudo npm explore npm -g -- npm install node-gyp@latest # (Optional) update node-
 import * as Web3 from 'web3'
 import { OpenSeaSDK, Network } from 'opensea-js'
 
-// This example provider won't let you make transactions, only read-only calls:
+// こちらサンプルのプロバイダではトランザクションの作成はできません。読み取り専用の呼び出しのみが可能です：
 const provider = new Web3.providers.HttpProvider('https://mainnet.infura.io')
 
 const openseaSDK = new OpenSeaSDK(provider, {
@@ -124,18 +124,18 @@ const openseaSDK = new OpenSeaSDK(provider, {
 
 ```TypeScript
 /**
- * Simple, unannotated non-fungible asset spec
+ * シンプルな注釈無しのノンファンジブル・アセットの仕様
  */
 export interface Asset {
-  // The asset's token ID, or null if ERC-20
+  // アセットのトークンID、ERC-20の場合はnull
   tokenId: string | null,
-  // The asset's contract address
+  // アセットのコントラクトアドレス
   tokenAddress: string,
-  // The Wyvern schema name (defaults to "ERC721") for this asset
+  // このアセットのWyvern Schema Name (デフォルトは"ERC721")
   schemaName?: WyvernSchemaName,
-  // Optional for ENS names
+  // 任意：ENSの名前
   name?: string,
-  // Optional for fungible items
+  // 任意：ファンジブルなアイテム用
   decimals?: number
 }
 ```
@@ -186,10 +186,10 @@ const balanceOfWETH = await openseaSDK.getTokenBalance({
 
 ### オファーを作成する
 
-取得したアセットにオファーを出すには、以下のように処理します：
+アセットにオファーを出すには、以下のように処理します：
 
 ```JavaScript
-// Token ID and smart contract address for a non-fungible token:
+// ノンファンジブル・トークンのスマートコントラクトアドレスとトークンID：
 const { tokenId, tokenAddress } = YOUR_ASSET
 // The offerer's wallet address:
 const accountAddress = "0x1234..."
@@ -198,10 +198,10 @@ const offer = await openseaSDK.createBuyOrder({
   asset: {
     tokenId,
     tokenAddress,
-    schemaName // WyvernSchemaName. If omitted, defaults to 'ERC721'. Other options include 'ERC20' and 'ERC1155'
+    schemaName // WyvernSchemaName（省略した場合、デフォルトでは'ERC721'になります。他には、'ERC20'と'ERC1155'があります。）
   },
   accountAddress,
-  // Value of the offer, in units of the payment token (or wrapped ETH if none is specified):
+  // 支払いに使用するトークン（もしくは指定がない場合はWETH）の単位でのオファー金額：
   startAmount: 1.2,
 })
 ```
@@ -218,24 +218,24 @@ Ethereum Name Service（ENS）では、ウォレットアドレスのラベル�
 ```JavaScript
 const {
   tokenId,
-  // Token address should be `0xfac7bea255a6990f749363002136af6556b31e04` on mainnet
+  // メインネットの場合、トークンアドレスは`0xfac7bea255a6990f749363002136af6556b31e04`です
   tokenAddress,
-  // Name must have `.eth` at the end and correspond with the tokenId
+  // nameの末尾は`.eth`で、tokenIdと一致している必要があります
   name
-} = ENS_ASSET // You can get an ENS asset from `openseaSDK.api.getAsset(...)`
+} = ENS_ASSET // `openseaSDK.api.getAsset(...)`からENSアセットを取得できます
 
 const offer = await openseaSDK.createBuyOrder({
   asset: {
     tokenId,
     tokenAddress,
     name,
-    // Only needed for the short-name auction, not ENS names
-    // that have been sold once already:
+    // short-nameオークションでのみ必要になります
+    // 既に一度売られているENSの名前ではありません
     schemaName: "ENSShortNameAuction"
   },
-  // Your wallet address (the bidder's address):
+  // あなたのウォレットアドレス（入札者のアドレス）：
   accountAddress: "0x1234..."
-  // Value of the offer, in wrapped ETH:
+  // WETH単位でのオファー額:
   startAmount: 1.2,
 })
 ```
@@ -249,8 +249,8 @@ const offer = await openseaSDK.createBuyOrder({
 アセットを出品するには、`createSellOrder` を呼び出します。`startAmount`と`endAmount`が等しい固定価格での出品、または`expirationTime`に達するまで価格が下がり続け、`startAmount`より`endAmount`の方が低くなる[ダッチ・オークション](https://en.wikipedia.org/wiki/Dutch_auction) （価格下降式） で出品できます：
 
 ```JavaScript
-// Expire this auction one day from now.
-// Note that we convert from the JavaScript timestamp (milliseconds):
+// 現在から一日後にオークションを終了する
+// JavaScriptのタイムスタンプ(ミリセカンド)から変換している点に注意してください:
 const expirationTime = Math.round(Date.now() / 1000 + 60 * 60 * 24)
 
 const listing = await openseaSDK.createSellOrder({
@@ -260,7 +260,7 @@ const listing = await openseaSDK.createSellOrder({
   },
   accountAddress,
   startAmount: 3,
-  // If `endAmount` is specified, the order will decline in value to that amount until `expirationTime`. Otherwise, it's a fixed-price order:
+  // `endAmount`が指定されている場合、`expirationTime`になるまで、オーダーの金額は指定した値に向かって下がり続けます。`endAmount`が指定されていない場合は、固定価格でのオーダーとなります：
   endAmount: 0.1,
   expirationTime
 })
@@ -279,10 +279,10 @@ const listing = await openseaSDK.createSellOrder({
 
 ```JavaScript
 
-// Create an auction to receive Wrapped Ether (WETH). See note below.
+// WETH単位でのオークションを作成。詳しくは下記をご確認ください。
 const paymentTokenAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
 
-const startAmount = 0 // The minimum amount to sell for, in normal units (e.g. ETH)
+const startAmount = 0 // 最低売却額（ETHなどの基本単位で指定）
 
 const auction = await openseaSDK.createSellOrder({
   asset: {
@@ -304,14 +304,14 @@ const auction = await openseaSDK.createSellOrder({
 特定のアセットに関するオファーとオークションの一覧を取得するには、クライアント側に公開されている`OpenSeaAPI`のインスタンスを使用できます。APIフィルタのオブジェクトに渡されるパラメータは、キャメルケースに変換され、シリアライズされてから[OpenSea API parameters](https://docs.opensea.io/v2.0/reference)として送信されます
 
 ```JavaScript
-// Get offers (bids), a.k.a. orders where `side == 0`
+// オファー（入札、または`side == 0`のオーダー）を取得する
 const { orders, count } = await openseaSDK.api.getOrders({
   assetContractAddress: tokenAddress,
   tokenId,
   side: "bid"
 })
 
-// Get page 2 of all auctions, a.k.a. orders where `side == 1`
+// 全てのオークション（`side == 1`のオーダー）の2ページ目を取得する
 const { orders, count } = await openseaSDK.api.getOrders({
   assetContractAddress: tokenAddress,
   tokenId,
@@ -330,23 +330,23 @@ signatures, makers, takers, listingTime vs createdTimeなどのオーダー用�
    * Attrs used by orderbook to make queries easier
    * More to come soon!
    */
-  side: "bid" | "ask", // "bid" for buy orders, "ask" for sell orders
-  protocol?: "seaport"; // Protocol of the order (more options may be added in future)
-  maker?: string, // Address of the order's creator
-  taker?: string, // The null address if anyone is allowed to take the order
-  owner?: string, // Address of owner of the order's item
-  sale_kind?: SaleKind, // 0 for fixed-price, 1 for Dutch auctions
-  assetContractAddress?: string, // Contract address for order's item
-  paymentTokenAddress?: string; // Contract address for order's payment token
+  side: "bid" | "ask", // 買い注文は"bid", 売り注文は"ask"
+  protocol?: "seaport"; // オーダーのプロトコル(将来的に他のオプションも追加予定)
+  maker?: string, // オーダーを作成した人のアドレス
+  taker?: string, // 誰でもテイカーになれる場合はnullアドレスを指定
+  owner?: string, // オーダーのアイテムの所有者のアドレス
+  sale_kind?: SaleKind, // 固定価格の場合は0, ダッチオークションの場合は1
+  assetContractAddress?: string, // オーダーのアイテムのコントラクトアドレス
+  paymentTokenAddress?: string; // オーダーの支払いトークンのコントラクトアドレス
   tokenId?: number | string,
   tokenIds?: Array<number | string>,
-  listedAfter?: number | string, // This means listing_time > value in seconds
-  listedBefore?: number | string, // This means listing_time <= value in seconds
-  orderBy?: "created_date" | "eth_price", // Field to sort results by
-  orderDirection?: "asc" | "desc", // Sort direction of orderBy sorting of results
-  onlyEnglish?: boolean, // Only return english auction orders
+  listedAfter?: number | string, // listing_timeが指定した値（秒単位）より大きい
+  listedBefore?: number | string, // listing_timeが指定した値（秒単位）以下
+  orderBy?: "created_date" | "eth_price", // 結果の並べ替え
+  orderDirection?: "asc" | "desc", // 結果の並べ替えの順序
+  onlyEnglish?: boolean, // イギリス式オークションのオーダーのみをreturn
 
-  // For pagination
+  // ページネーション用
   limit?: number,
   offset?: number,
 ```
@@ -358,7 +358,7 @@ signatures, makers, takers, listingTime vs createdTimeなどのオーダー用�
 
 ```JavaScript
 const order = await openseaSDK.api.getOrder({ side: "ask", ... })
-const accountAddress = "0x..." // The buyer's wallet address, also the taker
+const accountAddress = "0x..." // 購入者（テイカー）のウォレットアドレス
 const transactionHash = await this.props.openseaSDK.fulfillOrder({ order, accountAddress })
 ```
 
@@ -372,7 +372,7 @@ const transactionHash = await this.props.openseaSDK.fulfillOrder({ order, accoun
 
 ```JavaScript
 const order = await openseaSDK.api.getOrder({ side: "bid", ... })
-const accountAddress = "0x..." // The owner's wallet address, also the taker
+const accountAddress = "0x..." // 所有者（テイカー）のウォレットアドレス
 await this.props.openseaSDK.fulfillOrder({ order, accountAddress })
 ```
 
@@ -388,7 +388,7 @@ OpenSea.jsの便利な機能として、サポートされているあらゆる�
 
 const transactionHash = await openseaSDK.transfer({
   asset: { tokenId, tokenAddress },
-  fromAddress, // Must own the asset
+  fromAddress, // アセットを所有している必要があります
   toAddress
 })
 ```
@@ -403,7 +403,7 @@ const transactionHash = await openseaSDK.transfer({
     tokenAddress,
     schemaName: "ERC1155"
   },
-  fromAddress, // Must own the asset
+  fromAddress, // アセットを所有している必要があります
   toAddress,
   quantity: 2,
 })
@@ -422,7 +422,7 @@ const transactionHash = await openseaSDK.transfer({
     tokenAddress: paymentToken.address,
     schemaName: "ERC20"
   },
-  fromAddress, // Must own the tokens
+  fromAddress, // トークンを所有している必要があります
   toAddress,
   quantity
 })
@@ -446,7 +446,7 @@ const auction = await openseaSDK.createSellOrder({
   tokenId,
   accountAddress,
   startAmount: 1,
-  listingTime: Math.round(Date.now() / 1000 + 60 * 60 * 24) // One day from now
+  listingTime: Math.round(Date.now() / 1000 + 60 * 60 * 24) // 今から一日後
 })
 ```
 
@@ -458,8 +458,8 @@ const auction = await openseaSDK.createSellOrder({
 const order = await openseaSDK.api.getOrder({ side: "ask", ... })
 await this.props.openseaSDK.fulfillOrder({
   order,
-  accountAddress, // The address of your wallet, which will sign the transaction
-  recipientAddress // The address of the recipient, i.e. the wallet you're purchasing on behalf of
+  accountAddress, // トランザクションに署名するあなたのウォレットアドレス
+  recipientAddress // 受取人（あなたが代理で購入している相手）のアドレス
 })
 ```
 
@@ -476,7 +476,7 @@ const assets: Array<{tokenId: string; tokenAddress: string}> = [...]
 
 const transactionHash = await openseaSDK.transferAll({
   assets,
-  fromAddress, // Must own all the assets
+  fromAddress, // 全てのアセットを所有している必要があります
   toAddress
 })
 ```
@@ -489,10 +489,10 @@ const transactionHash = await openseaSDK.transferAll({
 以下はGenesis CryptoKittyを$100で出品した例です!もうレートを気にする必要はありません：
 
 ```JavaScript
-// Token address for the DAI stablecoin, which is pegged to $1 USD
+// 米ドルの$1にペッグされているステーブルコイン"DAI"のトークンアドレス
 const paymentTokenAddress = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
 
-// The units for `startAmount` and `endAmount` are now in DAI, so $100 USD
+// `startAmount`と`endAmount`の単位がDAIになったので、米ドルで$100となります
 const auction = await openseaSDK.createSellOrder({
   tokenAddress: "0x06012c8cf97bead5deae237070f9587f8e7a266d", // CryptoKitties
   tokenId: "1", // Token ID
@@ -520,13 +520,12 @@ const order = await openseaSDK.api.getOrders({
 
 ### プライベート・オークション
 
-Now you can make auctions and listings that can only be fulfilled by an address or email of your choosing. This allows you to negotiate a price in some channel and sell for your chosen price on OpenSea, **without having to trust that the counterparty will abide by your terms!**
-指定したアドレスやemailだけが落札できるオークションや出品を作成できます。これにより、事前に価格交渉を済ませた相手に対して、指定した価格でアイテムを販売することができます。
+指定したアドレスやemailだけが購入できるオークションや出品を作成できます。これにより、事前に価格交渉を済ませた相手に対して、指定した価格でアイテムを販売することができます。
 
 購入者のアドレスを指定した上で、Decentralandのパーセルを10ETHで出品する場合、以下のようになります：
 
 ```JavaScript
-// Address allowed to buy from you
+// 購入を許可するアドレス
 const buyerAddress = "0x123..."
 
 const listing = await openseaSDK.createSellOrder({
@@ -663,7 +662,6 @@ npm run build
 npm test
 ```
 
-Note that the tests require access to both Infura and the OpenSea API. The timeout is adjustable via the `test` script in `package.json`.
 テストする場合は、InfuraとOpenSea APIの両方へのアクセスが必要になります。タイムアウトは`package.json`内の`test`スクリプトで調整できます。
 
 **ドキュメントの作成**
@@ -690,6 +688,6 @@ yarn docs-build
 ## ローカルでブランチをテストする
 
 ```sh
-yarn link # in opensea-js repo
-yarn link opensea-js # in repo you're working on
+yarn link # opensea-jsのレポジトリ内
+yarn link opensea-js # 作業用のレポジトリ内
 ```
