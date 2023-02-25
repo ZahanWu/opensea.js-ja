@@ -513,7 +513,7 @@ const order = await openseaSDK.api.getOrders({
 })
 ```
 
-**備考:** 近々、全てのERC-20トークンが利用可能になります！これにより、暗号資産のコレクションに**あなた独自のERC-20トークンを使って**クレイジーなオファーを出せるということになります。しかし、opensea.ioでは、オーダーを受け取るユーザーの体験を最適化するため、把握しているERC-20トークンによるオファーとオークションのみを表示します。以下のトークンで作成されたオーダーに関してはOpenSea上に表示されます：
+**備考:** 近々、全てのERC-20トークンが利用可能になります！これにより、クリプト・コレクションに**あなた独自のERC-20トークンを使って**クレイジーなオファーを出せるということになります。しかし、opensea.ioでは、オーダーを受け取るユーザーの体験を最適化するため、把握しているERC-20トークンによるオファーとオークションのみを表示します。以下のトークンで作成されたオーダーに関してはOpenSea上に表示されます：
 
 - MANA, Decentralandの通貨: https://etherscan.io/token/0x0f5d2fb29fb7d3cfee444a200298f468908cc942
 - DAI, 米ドルの$1にペッグされているMakerのステーブルコイン: https://etherscan.io/token/0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359
@@ -521,8 +521,9 @@ const order = await openseaSDK.api.getOrders({
 ### プライベート・オークション
 
 Now you can make auctions and listings that can only be fulfilled by an address or email of your choosing. This allows you to negotiate a price in some channel and sell for your chosen price on OpenSea, **without having to trust that the counterparty will abide by your terms!**
+指定したアドレスやemailだけが落札できるオークションや出品を作成できます。これにより、事前に価格交渉を済ませた相手に対して、指定した価格でアイテムを販売することができます。
 
-Here's an example of listing a Decentraland parcel for 10 ETH with a specific buyer address allowed to take it. No more needing to worry about whether they'll give you enough back!
+購入者のアドレスを指定した上で、Decentralandのパーセルを10ETHで出品する場合、以下のようになります：
 
 ```JavaScript
 // Address allowed to buy from you
@@ -539,9 +540,9 @@ const listing = await openseaSDK.createSellOrder({
 
 ### イベントをリスニングする
 
-Events are fired whenever transactions or orders are being created, and when transactions return receipts from recently mined blocks on the Ethereum blockchain.
+イベントは、トランザクションやオーダーが作成された時や、トランザクションがイーサリアムのブロックチェーン上で最近採掘されたブロックからのレシートを返す時に発生します。
 
-Our recommendation is that you "forward" OpenSea events to your own store or state management system. Here's an example of doing that with a Redux action:
+Our recommendation is that you "forward" OpenSea events to your own store or state OpenSeaのイベントは、使用しているストアや状態管理システム側に"転送"するのがおすすめです。以下は、Reduxのアクションでそれを行う例です：
 
 ```JavaScript
 import { EventType } from 'opensea-js'
@@ -615,27 +616,28 @@ handleSDKEvents() {
 }
 ```
 
-To remove all listeners and start over, just call `openseaSDK.removeAllListeners()`.
+すべてのリスナーを削除して最初からやり直す場合は、`openseaSDK.removeAllListeners()`を呼び出してください。
 
 ## もっと詳しく
 
-Auto-generated documentation for each export is available [here](https://projectopensea.github.io/opensea-js/).
+各APIに関する自動生成のドキュメントは[こちら](https://projectopensea.github.io/opensea-js/)をご確認ください。
 
 ### サンプルコード
 
-Check out the [Ship's Log](https://github.com/ProjectOpenSea/ships-log), built with the SDK, which shows the recent orders in the OpenSea orderbook.
+このSDKで構築されたサンプルとして、[Ship's Log](https://github.com/ProjectOpenSea/ships-log)があります。このサンプルでは、OpenSeaのオーダーブック上の最近の注文を表示しています。
 
-Also check out the [Mythereum marketplace](https://mythereum.io/marketplace), which is entirely powered by OpenSea.js.
+他にも、OpenSea.jsを使って構築された事例として[Mythereum marketplace](https://mythereum.io/marketplace)があります。
+
 
 ## バージョン1.0への移行
 
-See the [Changelog](CHANGELOG.md).
+[Changelog](CHANGELOG.md)をご確認ください。
 
 ## 開発するにあたって
 
 **Setup**
 
-Before any development, install the required NPM dependencies:
+開発を始める前に、必要なNPMの依存関係をインストールしてください：
 
 ```bash
 npm install
