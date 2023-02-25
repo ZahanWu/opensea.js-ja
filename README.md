@@ -10,7 +10,7 @@
 
 <!-- [![npm](https://img.shields.io/npm/v/wyvern-js.svg)](https://www.npmjs.com/package/wyvern-js) [![npm](https://img.shields.io/npm/dt/wyvern-js.svg)](https://www.npmjs.com/package/wyvern-js) -->
 
-OpenSea.jsは、様々な暗号資産の売買や入札ができる、クリプトネイティブなeコマース向けのJavaScriptライブラリです。OpenSea.jsを使うことで、バックエンドのオーダーブックやスマートコントラクトを自分でデプロイしなくても、自身が所有するNFT（ERC-721またはERC-1155）を取引するための独自のマーケットプレイスを簡単に構築することができます。
+OpenSea.jsは、様々な暗号資産の売買や入札ができる、クリプトネイティブなeコマース向けのJavaScriptライブラリです。OpenSea.jsを使うことで、バックエンドのオーダーブックやスマートコントラクトを自分でデプロイしなくても、所有するNFT（ERC-721またはERC-1155）を取引するための独自のマーケットプレイスを簡単に構築することができます。
 
 Published on [GitHub](https://github.com/ProjectOpenSea/opensea-js) and [npm](https://www.npmjs.com/package/opensea-js)
 
@@ -49,14 +49,14 @@ Published on [GitHub](https://github.com/ProjectOpenSea/opensea-js) and [npm](ht
 このSDKを使用することで、公式のオーダーブックへのアクセスや、データの絞り込み、買い注文（**オファー**）の作成、売り注文（**オークション**）の作成などの機能を利用でき、プログラム上で取引を完結させることが出来ます。
 
 
-まずは[こちら](https://docs.opensea.io/reference)でAPIキーをリクエストしてから、OpenSea SDKのインスタンスを作成してください。その後、オフチェーンでのオーダーの作成や、オンチェーンでのオーダーの処理、イベントの処理（`ApproveAllAssets`や`WrapEth`等）などができるようになります。
+まずは[こちら](https://docs.opensea.io/reference)でAPIキーをリクエストしてから、OpenSea SDKのインスタンスを作成してください。その後、オフチェーンでのオーダーの作成や、オンチェーンでのオーダーの成立、イベントの処理（`ApproveAllAssets`や`WrapEth`等）などができるようになります。
 
 それでは、良い船旅を! ⛵️
 
 
 ## インストール
 
-一般的なクリプト関係の依存先が動作するように、Node.jsのバージョンを16に切り替えることをお勧めします。Node Version Managerを使用している場合は、`nvm use`を実行します。
+一般的なクリプト関連の依存関係が動作するように、Node.jsのバージョンを16に切り替えることをお勧めします。Node Version Managerを使用している場合は、`nvm use`を実行します。
 
 その後、プロジェクト内で以下を実行してください:
 
@@ -140,7 +140,7 @@ export interface Asset {
 }
 ```
 
-`Asset`型は、マーケットプレイス上でのほとんどのアクションで必要となる最低限の型です。`WyvernSchemaName`は任意の値で、省略した場合、ほとんどのアクションはERC721の非代替性アセットを参照しているとみなされます。他のオプションには'ERC20'と'ERC1155'があります。`import { WyvernSchemaName } from "opensea-js/lib/types"`のようにインポートすることで、サポートされている全てのスキーマを取得できます。
+`Asset`型は、マーケットプレイス上でのほとんどのアクションで必要となる最低限の型です。`WyvernSchemaName`は任意の値で、省略した場合、ほとんどのアクションはERC721のノンファンジブルなアセットを参照しているとみなされます。他のオプションには'ERC20'と'ERC1155'があります。`import { WyvernSchemaName } from "opensea-js/lib/types"`のようにインポートすることで、サポートされている全てのスキーマを取得できます。
 
 `OpenSeaAPI`を使用してアセットをフェッチすることで、`OpenSeaAsset` を取得できます (`OpenSeaAsset`は`Asset`を継承しています)：
 
@@ -541,7 +541,7 @@ const listing = await openseaSDK.createSellOrder({
 
 イベントは、トランザクションやオーダーが作成された時や、トランザクションがイーサリアムのブロックチェーン上で最近採掘されたブロックからのレシートを返す時に発生します。
 
-Our recommendation is that you "forward" OpenSea events to your own store or state OpenSeaのイベントは、使用しているストアや状態管理システム側に"転送"するのがおすすめです。以下は、Reduxのアクションでそれを行う例です：
+OpenSeaのイベントは、使用しているストアや状態管理システムに"転送"するのがおすすめです。以下は、Reduxのアクションでそれを行う例です：
 
 ```JavaScript
 import { EventType } from 'opensea-js'
@@ -558,7 +558,7 @@ handleSDKEvents() {
     })
     openSeaSDK.addListener(EventType.TransactionConfirmed, ({ transactionHash, event }) => {
       console.info({ transactionHash, event })
-      // OpenSea側でのオーダーの成立またはキャンセルを完了している場合のみ、取引所のUIをリセットしてください
+      // OpenSea側でのオーダーの成立またはキャンセルが完了している場合のみ、取引所のUIをリセットしてください
       if (event == EventType.MatchOrders || event == EventType.CancelOrder) {
         dispatch({ type: ActionTypes.RESET_EXCHANGE })
       }
